@@ -1,0 +1,3 @@
+/* English is the development language: the keys in Sources/main.swift are
+   the English strings, so no translations are needed here. This file only
+   makes English an available localization so non-Chinese systems get it. */

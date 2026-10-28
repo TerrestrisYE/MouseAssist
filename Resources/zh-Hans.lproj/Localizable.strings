@@ -1,0 +1,41 @@
+/* Menu status */
+"Running" = "运行中";
+"Could not start" = "启动失败";
+"Waiting for Accessibility permission…" = "等待辅助功能权限…";
+"Accessibility permission was turned off" = "辅助功能权限已被关闭";
+
+/* Menu item */
+"Open Accessibility Settings…" = "打开辅助功能设置…";
+"Reverse Mouse Wheel" = "反转鼠标滚轮";
+"Right-Drag Gestures" = "右键拖动手势";
+"Edge Glow When No More Spaces" = "切换到头时边缘闪光";
+"Launch at Login" = "登录时启动";
+"Quit MouseAssist" = "退出 MouseAssist";
+"Drag Up" = "向上拖动";
+"Drag Down" = "向下拖动";
+"Drag Left" = "向左拖动";
+"Drag Right" = "向右拖动";
+"Switch to Desktop" = "切换到桌面";
+"Nothing" = "无动作";
+"Trigger" = "触发时机";
+"While Dragging" = "拖动超过触发距离时";
+"On Release" = "松开右键时";
+"Gesture Distance" = "触发距离";
+
+/* Gesture distance in points */
+"%d pt" = "%d 点";
+
+/* Menu item suffix */
+" (off in System Settings)" = "（系统设置中未启用）";
+" (key changed in System Settings)" = "（系统设置中已改为其他按键）";
+
+/* System shortcut */
+"Mission Control" = "调度中心";
+"Application Windows" = "应用程序窗口";
+"Show Desktop" = "显示桌面";
+"Move Left a Space" = "左移一个空间";
+"Move Right a Space" = "右移一个空间";
+"Move Focus to Next Window" = "将焦点移到下一个窗口";
+"Show Spotlight Search" = "显示“聚焦”搜索";
+"Turn Dock Hiding On/Off" = "打开/关闭程序坞隐藏";
+"Switch to Desktop %d" = "切换到桌面 %d";
