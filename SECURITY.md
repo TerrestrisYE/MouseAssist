@@ -19,7 +19,7 @@ who forges a mouse gesture or edits its settings gets nothing more than "switch 
 | Running commands or scripts | None (does not link NSTask, `system`, `posix_spawn` or NSAppleScript) |
 | Settings | Three booleans, the trigger mode and gesture distance (each picked from a fixed list), and per direction the name of one allowlisted shortcut, in the app's own preferences domain. Unknown values fall back to the default. No import, export, sync or URL scheme |
 | Private API | Read-only `CGSCopyManagedDisplaySpaces` to find the current Space; if it is unavailable, only the edge glow is lost |
-| Logging | Debug level only: gesture direction and Space index. No coordinates, no frontmost app |
+| Logging | Debug level: gesture direction, Space index and timing. One error message if turning Launch at Login on or off fails. No coordinates, no frontmost app |
 | Installation | Built locally and copied to `/Applications`. No installer scripts, no root daemons, no quarantine stripping |
 | Launch at login | Off by default; turned on from the menu through `SMAppService`, so it shows up (and can be removed) under Login Items |
 

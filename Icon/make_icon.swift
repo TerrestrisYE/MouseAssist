@@ -8,18 +8,45 @@ let iconset = iconDir.appendingPathComponent("AppIcon.iconset")
 try? FileManager.default.removeItem(at: iconset)
 try FileManager.default.createDirectory(at: iconset, withIntermediateDirectories: true)
 
-// Symbols are rasterized at their point size, so they must be requested at
-// the final pixel size rather than drawn large and scaled down.
-func symbol(_ name: String, size: CGFloat, alpha: CGFloat) -> NSImage {
-    let config = NSImage.SymbolConfiguration(pointSize: size, weight: .semibold)
-        .applying(.init(paletteColors: [NSColor.white.withAlphaComponent(alpha)]))
-    return NSImage(systemSymbolName: name, accessibilityDescription: nil)!.withSymbolConfiguration(config)!
+// Everything is drawn with plain paths (no SF Symbols, which Apple's license
+// does not allow in app icons).
+func chevron(pointingLeft: Bool, at center: NSPoint, s: CGFloat) {
+    let dx = (pointingLeft ? 30 : -30) * s
+    let path = NSBezierPath()
+    path.move(to: NSPoint(x: center.x + dx, y: center.y + 60 * s))
+    path.line(to: NSPoint(x: center.x - dx, y: center.y))
+    path.line(to: NSPoint(x: center.x + dx, y: center.y - 60 * s))
+    path.lineWidth = 24 * s
+    path.lineCapStyle = .round
+    path.lineJoinStyle = .round
+    NSColor.white.withAlphaComponent(0.75).setStroke()
+    path.stroke()
 }
 
-func draw(_ image: NSImage, centeredAt center: NSPoint) {
-    let size = image.size
-    image.draw(in: NSRect(x: center.x - size.width / 2, y: center.y - size.height / 2,
-                          width: size.width, height: size.height))
+// A white mouse seen from above: a stadium-shaped body, the line between the
+// two buttons, and a scroll wheel, the details cut in the background color.
+func mouse(centeredAt center: NSPoint, s: CGFloat, detail: NSColor) {
+    let body = NSRect(x: center.x - 115 * s, y: center.y - 180 * s, width: 230 * s, height: 360 * s)
+    let shape = NSBezierPath(roundedRect: body, xRadius: 115 * s, yRadius: 115 * s)
+    NSColor.white.setFill()
+    shape.fill()
+
+    NSGraphicsContext.saveGraphicsState()
+    shape.addClip()
+    let split = body.maxY - 140 * s
+    let lines = NSBezierPath()
+    lines.move(to: NSPoint(x: center.x, y: body.maxY))
+    lines.line(to: NSPoint(x: center.x, y: split))
+    lines.move(to: NSPoint(x: body.minX, y: split))
+    lines.line(to: NSPoint(x: body.maxX, y: split))
+    lines.lineWidth = 12 * s
+    detail.setStroke()
+    lines.stroke()
+    NSGraphicsContext.restoreGraphicsState()
+
+    let wheel = NSRect(x: center.x - 15 * s, y: split + 30 * s, width: 30 * s, height: 66 * s)
+    detail.setFill()
+    NSBezierPath(roundedRect: wheel, xRadius: 15 * s, yRadius: 15 * s).fill()
 }
 
 // The layout follows the macOS icon grid on a 1024 canvas (824 body, 100
@@ -49,9 +76,9 @@ func render(pixels: Int) -> Data {
     let bottom = NSColor(srgbRed: 0.42, green: 0.27, blue: 0.92, alpha: 1)
     NSGradient(starting: top, ending: bottom)!.draw(in: body, angle: -90)
 
-    draw(symbol("computermouse.fill", size: 360 * s, alpha: 1), centeredAt: NSPoint(x: 512 * s, y: 512 * s))
-    draw(symbol("chevron.left", size: 120 * s, alpha: 0.75), centeredAt: NSPoint(x: (512 - 255) * s, y: 512 * s))
-    draw(symbol("chevron.right", size: 120 * s, alpha: 0.75), centeredAt: NSPoint(x: (512 + 255) * s, y: 512 * s))
+    mouse(centeredAt: NSPoint(x: 512 * s, y: 512 * s), s: s, detail: bottom.blended(withFraction: 0.5, of: top)!)
+    chevron(pointingLeft: true, at: NSPoint(x: (512 - 255) * s, y: 512 * s), s: s)
+    chevron(pointingLeft: false, at: NSPoint(x: (512 + 255) * s, y: 512 * s), s: s)
 
     NSGraphicsContext.restoreGraphicsState()
     return rep.representation(using: .png, properties: [:])!

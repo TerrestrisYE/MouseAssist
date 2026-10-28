@@ -32,7 +32,7 @@ Xcode command line tools.
 
 ```bash
 xcode-select --install   # if not installed yet
-git clone <this repository>
+git clone https://github.com/TerrestrisYE/MouseAssist.git
 cd MouseAssist
 ./build.sh               # build, sign, copy to /Applications and launch
 ```
@@ -51,6 +51,10 @@ cd MouseAssist
   macOS and has to be turned on under Keyboard Shortcuts → Mission Control first.
 - Arbitrary key combinations cannot be assigned, by design (see SECURITY.md).
 - macOS ignores ⌃↓ in fullscreen apps, so dragging down has no effect there.
+- While Right-Drag Gestures is on, every right-button drag is taken over, so apps that use right-drag
+  themselves (3D and CAD tools, some games, browser mouse-gesture extensions) no longer receive it.
+  Pressing the right button, holding, and releasing over a context menu item does not work either,
+  because the context menu only opens on release. Turn the feature off from the menu when you need either.
 - Detecting the last Space uses a private, read-only macOS Spaces call. If a future macOS changes it,
   the edge glow stops appearing; switching itself is unaffected.
 - Horizontal scrolling is never reversed.
